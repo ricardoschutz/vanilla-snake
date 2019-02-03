@@ -1,4 +1,4 @@
-let CACHE_ID = 'vanilla-snake1.0.1'
+let CACHE_ID = 'vanilla-snake1.1.4'
 
 let fileList = [
     'index.html',

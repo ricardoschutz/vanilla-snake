@@ -85,7 +85,7 @@ class SnakeGameBonus {
                 game.addScore(this.points)
                 game.gameState.blockLevelChange = true
                 let originalInterval = game.gameState.interval
-                game.gameState.interval = 1000 // Math.floor(game.gameState.interval * 3)
+                game.gameState.interval = 400 // Math.floor(game.gameState.interval * 3)
                 game.screen.setAttribute('matrix','')
                 if (this.duration > 0) {
                     let id = game.gameID
@@ -99,23 +99,10 @@ class SnakeGameBonus {
                 break;
                 
             case 'half':
-                // game.gameState.bonusActive = true
                 game.addScore(this.points)
                 for (let i=0; i<Math.floor(game.snake.length / 2); i++) {
                     game.unsetPixel(game.snake.pop())
                 }
-                // game.gameState.blockLevelChange = true
-                // let originalInterval = game.gameState.interval
-                // game.gameState.interval = 1000 // Math.floor(game.gameState.interval * 3)
-                // game.screen.setAttribute('matrix','')
-                // if (this.duration > 0) {
-                //     setTimeout(() => {
-                //         game.gameState.bonusActive = false
-                //         game.gameState.interval = originalInterval
-                //         game.gameState.blockLevelChange = false
-                //         game.screen.removeAttribute('matrix')
-                //     }, this.duration);
-                // }
                 break;
         }
     }
@@ -141,7 +128,7 @@ class SnakeGame {
             APPLE_MAX_SCORE: 12,       // score
             APPLE_MIN_SCORE: 6,
             MAX_BONUSES: 1,
-            BONUS_PROBABILITY: 4
+            BONUS_PROBABILITY: 1
         }
 
         Object.defineProperty(this, 'isPlaying', {
@@ -632,10 +619,18 @@ function fetchURL(url) {
 }
 
 function bindButtons(game) {
-    document.querySelector('[button][up]').addEventListener('touchstart', (e) => game.clicked('ArrowUp', e))
-    document.querySelector('[button][left]').addEventListener('touchstart', (e) => game.clicked('ArrowLeft', e))
-    document.querySelector('[button][right]').addEventListener('touchstart', (e) => game.clicked('ArrowRight', e))
-    document.querySelector('[button][down]').addEventListener('touchstart', (e) => game.clicked('ArrowDown', e))
+    for (let b of document.querySelectorAll('[button][up]')) {
+        b.addEventListener('touchstart', (e) => game.clicked('ArrowUp', e))
+    }
+    for (let b of document.querySelectorAll('[button][left]')) {
+        b.addEventListener('touchstart', (e) => game.clicked('ArrowLeft', e))
+    }
+    for (let b of document.querySelectorAll('[button][right]')) {
+        b.addEventListener('touchstart', (e) => game.clicked('ArrowRight', e))
+    }
+    for (let b of document.querySelectorAll('[button][down]')) {
+        b.addEventListener('touchstart', (e) => game.clicked('ArrowDown', e))
+    }
 }
 
 function onReady(fn) {
@@ -755,6 +750,13 @@ class SnakeDB {
 
 }
 
+function renderCoin(value) {
+    if (value)
+        document.querySelector('[coin]').setAttribute('used', '');
+    else
+        document.querySelector('[coin]').removeAttribute('used', '');
+}
+
 let pwa = new PWA()
 pwa.registerServiceWorker()
 
@@ -779,6 +781,7 @@ onReady(() => {
 
         game.onGameEnd((id) => {
             snakeDB.insert('recording', game.recording)
+
             setTimeout(() => {
                 if (id == game.gameID && game.isDead()) {
                     snakeDB.getAllKeys('recording').then(keys => {
@@ -794,13 +797,16 @@ onReady(() => {
             game.clicked(event.key)
         })
     
-        // Bind restart when clicking on screen
-        screen.addEventListener('click', e => {
+        // Bind restart when clicking on coin
+        document.querySelector('[coin]').addEventListener('click', e => {
             e.preventDefault()
-            if (game.isDead() || game.isPlaying) {
-                game.newGame(screen)
-                game.start()
-            }
+            renderCoin(true)
+            setTimeout(() => {
+                if (game.isDead() || game.isPlaying) {
+                    game.newGame(screen)
+                    game.start()
+                }
+            }, 1300);
         })
     
         // Store status html elements
@@ -812,6 +818,7 @@ onReady(() => {
 
         game.addChangeListener(() => {
             renderPlaying(game.isPlaying)
+            renderCoin(!game.isPlaying)
         })
 
         snakeGame = game
@@ -832,5 +839,29 @@ onReady(() => {
                 }
             })
         })
+
+    function calculateSize() {
+        var w = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        var h = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        let size = getComputedStyle(document.querySelector(':root')).getPropertyValue('--size'),
+            maxSize = getComputedStyle(document.querySelector(':root')).getPropertyValue('--max-size')
+
+        size = w < h - 240 ? w - 3 : h - 244;
+
+        if (window.gameScreenSize != size) {
+            window.gameScreenSize = size;
+            window.document.querySelector('body').style.setProperty('--size', '' + size + 'px');
+        }
+    }
+
+    calculateSize()
+
+    window.onresize = calculateSize;
 
 });

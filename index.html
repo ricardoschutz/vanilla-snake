@@ -38,13 +38,19 @@
             <div status><div score>Score: 0</div><div level>Level: 1</div><div apples>Apples: 0</div></div>
             <div screen-container>
                 <div screen></div>
-                <div is-playing="true">Replay<br/>Touch here to start new game</div>
+                <div is-playing="true">INSERT COIN</div>
             </div>
         </div>
         <div bottom>
             <div buttons-container>
                 <div buttons>
                     <div center>
+                        <div button up>
+                            <svg height="32" width="50">
+                                <path d="M25 0 L0 25 L50 25 Z" />
+                                UP
+                            </svg>
+                        </div>
                         <div button up>
                             <svg height="32" width="50">
                                 <path d="M25 0 L0 25 L50 25 Z" />
@@ -73,9 +79,17 @@
                                 DOWN
                             </svg>
                         </div>
+                        <div button down>
+                            <svg height="32" width="50">
+                                <path d="M25 32 L0 7 L50 7 Z" />
+                                DOWN
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div coin-slot></div>
+        <div coin></div>
 	</body>
 </html>
