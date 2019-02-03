@@ -1,0 +1,22 @@
+{
+    "name": "Vanilla Snake",
+    "short_name": "VanillaSnake",
+    "description": "A Vanilla JS Snake Game Remake",
+    "start_url": "./index.html",
+    "scope": ".",
+    "display": "standalone",
+    "icons": [{
+      "src": "app/img/icon.png",
+      "sizes": "250x250",
+      "type": "image/png"
+    },
+    {
+      "src": "app/img/icon512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }],
+    "background_color": "#FFFFFF",
+    "theme_color": "#005c38",
+    "orientation": "portrait-primary",
+    "lang": "en-US"
+}

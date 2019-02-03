@@ -1,0 +1,207 @@
+html,body {
+    background-color: #d6d6d6;
+    --size: 360px;
+    --border: 1px solid rgba(0,0,0,0.2);
+    margin:0 auto;
+    padding:0;
+    height: 100%;
+    touch-action: manipulation;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+[status] {
+    width: var(--size);
+    max-width: var(--size);
+    margin: 10px auto 0 auto;
+    border: var(--border);
+    padding-left: 1px;
+    padding-top: 1px;
+    background-color: #e7efe5;
+    color: #808080;
+    font-family: monospace;
+    display: flex;
+    justify-content: space-between;
+    height: 16px;
+    min-height: 16px;
+}
+[screen-container] {
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+[screen] {
+    border: var(--border);
+    border-top: none;
+    padding-left: 1px;
+    padding-bottom: 1px;
+    width: var(--size);
+    max-width: var(--size);
+    margin: 0 auto;
+    background-color: #e7efe5ea;
+}
+[screen][matrix] [pixel][state=off] {
+    opacity: 0.0;
+    background-color: #e7efe5ea;
+    transition: all 1s;
+}
+[screen][matrix] [pixel][state=on] {
+    opacity: 1.0;
+    background-color: #808080;
+    transition: opacity 1s
+}
+[line] {
+    width: var(--size);
+    height: calc(var(--size) / 25);
+}
+[pixel] {
+    float: left;
+    width: calc((var(--size) / 25) - 1px);
+    height: calc((var(--size) / 25) - 1px);
+    margin: 1px 1px 0 0;
+    border-radius: 3px;
+    background-color: #808080;
+    opacity: 0.0;
+}
+[pixel][state=on] {
+    opacity: 1;
+    background-color: #808080;
+}
+[pixel][state=dead] {
+    opacity: 1;
+    background-color: #804040;
+    box-shadow: 0 0 5px red;
+}
+
+[pixel][state=apple] {
+    opacity: 1;
+    background-color: #d61e1e;
+    border-radius: 50%;
+}
+
+[pixel][state=bonus] {
+    opacity: 1;
+    background: none;
+}
+[pixel][state=bonus][bonus=matrix]::before {
+    opacity: 1;
+    content: '';
+    display:block;
+    width: calc((var(--size) / 100) - 1px);
+    height: calc((var(--size) / 35) - 1px);
+    border: calc((var(--size) / 110) - 1px) solid;
+    border-radius: 20%;
+    border-color: rgba(255,255,255,1);
+    box-shadow: 0 0 calc((var(--size) / 80)) rgba(0,200,0,1), inset 0 0 calc((var(--size) / 80)) rgba(0,200,0,1);
+}
+[pixel][state=bonus][bonus=matrix]::after {
+    opacity: 1;
+    content: '';
+    display:block;
+    position:relative;
+    width: calc((var(--size) / 200) - 1px);
+    height: calc((var(--size) / 44) - 1px);
+    border: calc((var(--size) / 110) - 1px) solid;
+    border-top: none;
+    border-left: none;
+    border-bottom-width: calc(((var(--size) / 45) - 1px));
+    top: calc(-1 * ((var(--size) / 25) - 1px));
+    left: calc(((var(--size) / 33) - 1px));
+    border-radius: 20%;
+    border-color: rgba(255,255,255,1);
+    box-shadow: 0 0 calc((var(--size) / 80)) rgba(0,200,0,1), inset 0 0 calc((var(--size) / 80)) rgba(0,200,0,1);
+}
+
+[pixel][state=bonus][bonus=half]::before {
+    opacity: 1;
+    content: '/';
+    display:block;
+    position: relative;
+    left: 7%;
+    top: -34%;
+    font-family: monospace;
+    font-weight: bold;
+    color: black;
+    font-size: calc(((var(--size) / 17) - 1px));
+    transform: rotate(20deg);
+}
+
+[buttons-container] {
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+}
+[buttons] {
+    width: calc(100% - 20px);
+    margin: 5px auto;
+    display: flex;
+    flex-direction: column;
+    height: 80vw;
+    max-height: 200px;
+    max-width: var(--size);
+}
+[buttons]>div {
+    height: calc(100% / 3);
+}
+[center] [button] {
+    width: 80%;
+}
+[button] {
+    width: calc(100% / 2.5);
+    height: calc(100% - 2px);
+    background-color: #b1b1b1;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+[button]>svg {
+    fill: #e4e3e3;
+    stroke: rgba(0,0,0,0.4);
+    stroke-width: 0.5px;
+}
+[center] {
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+}
+[space-between] {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+}
+@media screen and (min-width:768px) {
+    [buttons-container] {
+        display: none;
+    }
+}
+
+[is-playing] {
+    position: relative;
+    bottom: 36px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: monospace;
+    text-transform: uppercase;
+    animation-name: blinking;
+    animation-duration: 2s;
+    animation-iteration-count:infinite;
+}
+
+[is-playing=false] {
+    display: none;
+}
+
+@keyframes blinking {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}

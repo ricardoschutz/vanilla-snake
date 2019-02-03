@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="./">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta name="google" value="notranslate">
+		<link rel="manifest" href="manifest.json">
+		<title>Vanilla Snake</title>
+
+        <!-- Android -->
+        <meta name="theme-color" content="#005c38">
+
+		<!-- Windows -->
+        <meta name="msapplication-TileColor" content="#005c38">
+		<meta name="msapplication-TileImage" content="app/img/logo.png">
+
+		<!-- Safari -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="#005c38">
+		<link rel="apple-touch-icon" href="app/img/logo.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="Vanilla Snake">
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133488954-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-133488954-1');
+        </script>
+
+        <link rel="stylesheet" href="app/css/style.css">
+		<script src="app/app.js"></script>
+	</head>
+	<body>
+        <div top>
+            <div status><div score>Score: 0</div><div level>Level: 1</div><div apples>Apples: 0</div></div>
+            <div screen-container>
+                <div screen></div>
+                <div is-playing="true">Replay<br/>Touch here to start new game</div>
+            </div>
+        </div>
+        <div bottom>
+            <div buttons-container>
+                <div buttons>
+                    <div center>
+                        <div button up>
+                            <svg height="32" width="50">
+                                <path d="M25 0 L0 25 L50 25 Z" />
+                                UP
+                            </svg>
+                        </div>
+                    </div>
+                    <div space-between>
+                        <div button left>
+                            <svg height="50" width="32">
+                                <path d="M0 25 L25 0 L25 50 Z" />
+                                LEFT
+                            </svg>
+                        </div>
+                        <div button right>
+                            <svg height="50" width="32">
+                                <path d="M32 25 L7 0 L7 50 Z" />
+                                RIGHT
+                            </svg>
+                        </div>
+                    </div>
+                    <div center>
+                        <div button down>
+                            <svg height="32" width="50">
+                                <path d="M25 32 L0 7 L50 7 Z" />
+                                DOWN
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>

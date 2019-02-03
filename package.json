@@ -1,0 +1,19 @@
+{
+  "name": "vanilla-snake",
+  "version": "1.0.0",
+  "description": "Classic Snake Game remake",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricardoschutz/vanilla-snake.git"
+  },
+  "author": "Ricardo Schutz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ricardoschutz/vanilla-snake/issues"
+  },
+  "homepage": "https://www.rascode.com.br/snake"
+}
