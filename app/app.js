@@ -79,13 +79,20 @@ class SnakeGameBonus {
     }
 
     apply(game) {
+
+        // For showing bonus name
+        game.bonusActive = this.type.name
+        setTimeout(() => {
+            game.bonusActive = false
+        }, 1500);
+
         switch (this.type.name) {
             case 'matrix':
-                game.gameState.bonusActive = true
                 game.addScore(this.points)
+                game.gameState.bonusActive = true
                 game.gameState.blockLevelChange = true
                 let originalInterval = game.gameState.interval
-                game.gameState.interval = 400 // Math.floor(game.gameState.interval * 3)
+                game.gameState.interval = 500 // Math.floor(game.gameState.interval * 3)
                 game.screen.setAttribute('matrix','')
                 if (this.duration > 0) {
                     let id = game.gameID
@@ -135,6 +142,14 @@ class SnakeGame {
             get() { return this._isPlaying },
             set(newValue) {
                 this._isPlaying = newValue
+                this.notifyChangeListeners()
+            }
+        })
+
+        Object.defineProperty(this, 'bonusActive', {
+            get() { return this._bonusActive },
+            set(newValue) {
+                this._bonusActive = newValue
                 this.notifyChangeListeners()
             }
         })
@@ -819,6 +834,17 @@ onReady(() => {
         game.addChangeListener(() => {
             renderPlaying(game.isPlaying)
             renderCoin(!game.isPlaying)
+            
+            let bonusNameEl = document.querySelector('[bonus-name]')
+
+            if (game.bonusActive) {
+                bonusNameEl.innerHTML = game.bonusActive
+                bonusNameEl.setAttribute('show', '')
+            } else {
+                bonusNameEl.innerHTML = ''
+                bonusNameEl.removeAttribute('show')
+            }
+
         })
 
         snakeGame = game

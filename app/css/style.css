@@ -2,10 +2,12 @@ html,body {
     background-color: #d6d6d6;
     --size: calc(100vw - 3px);
     --border: 1px solid rgba(0,0,0,0.2);
+    --color-pixel-on: #4e4e4e;
     margin:0 auto;
     padding:0;
     height: 100%;
     touch-action: manipulation;
+    font-family: arcadeclassicregular;
 }
 body {
     display: flex;
@@ -20,7 +22,7 @@ body {
     padding-left: 1px;
     padding-top: 1px;
     background-color: #d4e0d0;
-    color: #808080;
+    color: var(--color-pixel-on);
     font-family: monospace;
     display: flex;
     justify-content: space-between;
@@ -49,7 +51,7 @@ body {
 }
 [screen][matrix] [pixel][state=on] {
     opacity: 1.0;
-    background-color: #808080;
+    background-color: var(--color-pixel-on);
     transition: opacity 1s
 }
 [line] {
@@ -62,12 +64,12 @@ body {
     height: calc((var(--size) / 25) - 1px);
     margin: 1px 1px 0 0;
     border-radius: 3px;
-    background-color: #808080;
+    background-color: var(--color-pixel-on);
     opacity: 0.0;
 }
 [pixel][state=on] {
     opacity: 1;
-    background-color: #808080;
+    background-color: var(--color-pixel-on);
 }
 [pixel][state=dead] {
     opacity: 1;
@@ -94,7 +96,7 @@ body {
     border: calc((var(--size) / 110) - 1px) solid;
     border-radius: 20%;
     border-color: rgba(255,255,255,1);
-    box-shadow: 0 0 calc((var(--size) / 80)) rgba(0,200,0,1), inset 0 0 calc((var(--size) / 80)) rgba(0,200,0,1);
+    box-shadow: 0 0 calc((var(--size) / 70)) rgba(0,150,0,1), inset 0 0 calc((var(--size) / 70)) rgba(0,150,0,1);
 }
 [pixel][state=bonus][bonus=matrix]::after {
     opacity: 1;
@@ -107,11 +109,11 @@ body {
     border-top: none;
     border-left: none;
     border-bottom-width: calc(((var(--size) / 45) - 1px));
-    top: calc(-1 * ((var(--size) / 25) - 1px));
+    top: calc(-1 * ((var(--size) / 25)));
     left: calc(((var(--size) / 33) - 1px));
     border-radius: 20%;
     border-color: rgba(255,255,255,1);
-    box-shadow: 0 0 calc((var(--size) / 80)) rgba(0,200,0,1), inset 0 0 calc((var(--size) / 80)) rgba(0,200,0,1);
+    box-shadow: 0 0 calc((var(--size) / 70)) rgba(0,150,0,1), inset 0 0 calc((var(--size) / 70)) rgba(0,150,0,1);
 }
 
 [pixel][state=bonus][bonus=half]::before {
@@ -181,12 +183,11 @@ body {
 
 [is-playing] {
     position: absolute;
-    top: calc(var(--size) * .9);
+    top: calc(var(--size) * .99);
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     letter-spacing: calc(var(--size) * .01);
-    font-family: arcadeclassicregular;
     text-transform: uppercase;
     animation-name: blinking;
     animation-duration: 1s;
@@ -226,7 +227,7 @@ body {
 }
 
 [coin-slot] {
-    left: calc(40vw + 20px);
+    left: calc(50vw - 24px);
     transform: translateX(-50%);
     width: 15px;
     height: 65px;
@@ -236,7 +237,7 @@ body {
 }
 
 [coin] {
-    left: calc(40vw + 62px);
+    left: calc(50vw + 22px);
     transform: translateX(-50%);
     width: 100px;
     height: 65px;
@@ -246,9 +247,53 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position-x: 15px;
-    transition: background-position-x 1s cubic-bezier(0.66, -0.58, 0.79, 0.52);
+    transition: background-position-x 1s cubic-bezier(0.84, -0.32, 0.96, 0.18);
 }
 
 [coin][used] {
     background-position-x: -85px;
+}
+
+[bonus-name] {
+    position: absolute;
+    display: none;
+}
+
+[bonus-name][show] {
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    text-transform: uppercase;
+    animation-name: bonus-fade-up;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    letter-spacing: calc(var(--size) * .01);
+    color: white;
+    width: var(--size);
+    top: calc(var(--size) * .5);
+    font-size: calc(var(--size) * .2);
+    text-shadow: 0 0 calc(var(--size) * .03) #00000099;
+    opacity: 0;
+}
+
+@keyframes bonus-fade-up {
+    0% {
+        top: calc(var(--size) * .5);
+        font-size: calc(var(--size) * .2);
+        text-shadow: 0 0 calc(var(--size) * .03) #00000099;
+        opacity: 0;
+    }
+    25% {
+        top: calc(var(--size) * .4);
+        font-size: calc(var(--size) * .2);
+        text-shadow: 0 0 calc(var(--size) * .03) #00000099;
+        opacity: .75;
+    }
+    100% {
+        top: calc(var(--size) * .4);
+        font-size: calc(var(--size) * .01);
+        text-shadow: 0 0 calc(var(--size) * .01) #00000099;
+        opacity: 0;
+    }
 }
